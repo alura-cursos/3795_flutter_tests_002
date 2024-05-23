@@ -32,5 +32,10 @@ void main() {
 
       expect(find.text("Cadastrar"), findsOneWidget);
     });
+
+    testWidgets("Cadastrar e deslogar", (tester) async {
+      await tester.pumpWidget(const MyApp());
+      await tester.pumpAndSettle();
+    });
   });
 }
