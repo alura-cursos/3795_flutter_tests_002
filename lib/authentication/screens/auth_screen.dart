@@ -166,6 +166,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                     ),
                     TextButton(
+                      key: const ValueKey(ListinKeys.authChangeStateButton),
                       onPressed: () {
                         setState(() {
                           isLoginScreen = !isLoginScreen;
