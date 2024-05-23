@@ -88,6 +88,39 @@ void main() {
 
       expect(find.text(listinName), findsOneWidget);
 
+      await tester.tap(find.text(listinName));
+      await tester.pumpAndSettle();
+
+      expect(find.text(listinName), findsOneWidget);
+
+      await tester.tap(find.byType(FloatingActionButton));
+      await tester.pumpAndSettle();
+
+      await tester.enterText(find.byType(TextFormField).first, "Abacate");
+      await tester.enterText(find.byType(TextFormField).at(1), "2");
+      await tester.enterText(find.byType(TextFormField).at(2), "5.50");
+
+      await tester.tap(find.text("Adicionar produto"));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text("Outros campos"));
+      await tester.pumpAndSettle();
+
+      await tester.scrollUntilVisible(
+        find.text("Salvar"),
+        500,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text("Salvar"));
+      await tester.pumpAndSettle();
+
+      expect(find.text("Abacate (x2)"), findsOneWidget);
+
+      await tester.tap(find.byIcon(Icons.arrow_back));
+      await tester.pumpAndSettle();
+
       // n. Sair, fazer login e excluir a conta
       await tester.tap(find.byIcon(Icons.menu));
       await tester.pumpAndSettle();
