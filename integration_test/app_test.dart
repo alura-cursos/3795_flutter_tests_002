@@ -6,6 +6,7 @@ import "package:flutter/material.dart";
 import "package:flutter_listin/_core/constants/listin_keys.dart";
 import "package:flutter_listin/firebase_options.dart";
 import "package:flutter_listin/main.dart";
+import "package:flutter_listin/products/widgets/product_list_item.dart";
 import "package:flutter_test/flutter_test.dart";
 import "package:integration_test/integration_test.dart";
 
@@ -122,6 +123,17 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text("Abacate (x2)"), findsOneWidget);
+
+      await tester.tap(
+        find.descendant(
+          of: find.widgetWithText(ProductListItem, "Abacate (x2)"),
+          matching: find.widgetWithIcon(IconButton, Icons.delete),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text("Abacate (x2)"), findsNothing);
+      expect(find.byType(ProductListItem), findsNothing);
 
       await tester.tap(find.byIcon(Icons.arrow_back));
       await tester.pumpAndSettle();
