@@ -39,7 +39,8 @@ void main() {
       expect(find.text("Cadastrar"), findsOneWidget);
     }, skip: true);
 
-    testWidgets("Cadastrar e deslogar", (tester) async {
+    testWidgets("Fluxo completo da aplicação", (tester) async {
+      //0. Configurações Iniciais
       await tester.pumpWidget(const MyApp());
       await tester.pumpAndSettle();
 
@@ -47,6 +48,7 @@ void main() {
       String email = "ricarth${Random().nextInt(899) + 100}@gmail.com";
       String password = "123321";
 
+      // 1. Criar conta
       await tester.tap(
         find.byKey(const ValueKey(ListinKeys.authChangeStateButton)),
       );
@@ -75,6 +77,18 @@ void main() {
       await tester.tap(find.byKey(const ValueKey(ListinKeys.authMainButton)));
       await tester.pumpAndSettle(const Duration(seconds: 2));
 
+      await tester.tap(find.byType(FloatingActionButton));
+      await tester.pumpAndSettle();
+
+      String listinName = "Feira de Maio";
+
+      await tester.enterText(find.byType(TextFormField).first, listinName);
+      await tester.tap(find.text("Salvar"));
+      await tester.pumpAndSettle();
+
+      expect(find.text(listinName), findsOneWidget);
+
+      // n. Sair, fazer login e excluir a conta
       await tester.tap(find.byIcon(Icons.menu));
       await tester.pumpAndSettle();
 
@@ -83,6 +97,43 @@ void main() {
 
       await tester.tap(find.byKey(const ValueKey(ListinKeys.homeLogoutButton)));
       await tester.pumpAndSettle();
+
+      await tester.enterText(
+        find.byKey(const ValueKey(ListinKeys.authEmailTextField)),
+        email,
+      );
+      await tester.enterText(
+        find.byKey(const ValueKey(ListinKeys.authPasswordTextField)),
+        password,
+      );
+
+      await tester.tap(find.byKey(const ValueKey(ListinKeys.authMainButton)));
+      await tester.pumpAndSettle(const Duration(seconds: 2));
+
+      await tester.tap(find.byIcon(Icons.menu));
+      await tester.pumpAndSettle();
+
+      await tester
+          .tap(find.byKey(const ValueKey(ListinKeys.homeRemoveUserButton)));
+      await tester.pumpAndSettle();
+
+      await tester.enterText(find.byType(TextFormField), password);
+      await tester.tap(find.widgetWithText(TextButton, "EXCLUIR CONTA"));
+      await tester.pumpAndSettle(const Duration(seconds: 2));
+
+      await tester.enterText(
+        find.byKey(const ValueKey(ListinKeys.authEmailTextField)),
+        email,
+      );
+      await tester.enterText(
+        find.byKey(const ValueKey(ListinKeys.authPasswordTextField)),
+        password,
+      );
+
+      await tester.tap(find.byKey(const ValueKey(ListinKeys.authMainButton)));
+      await tester.pumpAndSettle(const Duration(seconds: 2));
+
+      expect(find.text("invalid-credential"), findsOneWidget);
     });
   });
 }
