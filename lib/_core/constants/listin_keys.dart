@@ -6,4 +6,7 @@ class ListinKeys {
   static const String authPasswordTextField = "AUTH_PASSWORD_TEXT_FIELD";
   static const String authConfirmPasswordTextField =
       "AUTH_CONFIRM_PASSWORD_TEXT_FIELD";
+
+  static const String homeRemoveUserButton = "HOME_REMOVE_USER_BUTTON";
+  static const String homeLogoutButton = "HOME_LOGOUT_BUTTON";
 }
