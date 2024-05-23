@@ -113,6 +113,11 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      await tester.enterText(
+        find.widgetWithText(TextFormField, "Observações"),
+        "Apenas comprar se estiver maduro",
+      );
+
       await tester.tap(find.text("Salvar"));
       await tester.pumpAndSettle();
 
