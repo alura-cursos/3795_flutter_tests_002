@@ -26,6 +26,8 @@ dependencies:
 
 # Dependências de desenvolvimento
 dev_dependencies:
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.2
